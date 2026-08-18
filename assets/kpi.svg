@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 190" width="1000" height="190" role="img" aria-label="Métricas de V4SP3R">
+  <defs>
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00FFA3"/><stop offset="100%" stop-color="#2AC3FF"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse">
+      <path d="M26 0H0V26" fill="none" stroke="#0FE39A" stroke-opacity=".06" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <rect width="1000" height="190" rx="16" fill="#04070A"/>
+  <rect width="1000" height="190" rx="16" fill="url(#grid)"/>
+  <rect x="1" y="1" width="998" height="188" rx="15" fill="none" stroke="#13372F" stroke-width="2"/>
+  <text x="26" y="34" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#4E6A63" letter-spacing="2.4">// PAINEL DE MÉTRICAS — ÚLTIMOS 12 MESES</text>
+  <line x1="26" y1="48" x2="974" y2="48" stroke="#13372F"/>
+  
+    <g>
+      <rect x="26" y="68" width="146.33333333333334" height="94" rx="12" fill="#070D10" stroke="#13372F"/>
+      <rect x="26" y="68" width="146.33333333333334" height="3" rx="1.5" fill="url(#neon)" opacity=".9"/>
+      <text x="99.16666666666667" y="122" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="30"
+            font-weight="700" fill="#E9F5F1" filter="url(#glow)">326</text>
+      <text x="99.16666666666667" y="146" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="9.5"
+            fill="#4E6A63" letter-spacing="1.2">CONTRIBUIÇÕES / ANO</text>
+    </g>
+    <g>
+      <rect x="186.33333333333334" y="68" width="146.33333333333334" height="94" rx="12" fill="#070D10" stroke="#13372F"/>
+      <rect x="186.33333333333334" y="68" width="146.33333333333334" height="3" rx="1.5" fill="url(#neon)" opacity=".9"/>
+      <text x="259.5" y="122" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="30"
+            font-weight="700" fill="#E9F5F1" filter="url(#glow)">229</text>
+      <text x="259.5" y="146" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="9.5"
+            fill="#4E6A63" letter-spacing="1.2">COMMITS</text>
+    </g>
+    <g>
+      <rect x="346.6666666666667" y="68" width="146.33333333333334" height="94" rx="12" fill="#070D10" stroke="#13372F"/>
+      <rect x="346.6666666666667" y="68" width="146.33333333333334" height="3" rx="1.5" fill="url(#neon)" opacity=".9"/>
+      <text x="419.83333333333337" y="122" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="30"
+            font-weight="700" fill="#E9F5F1" filter="url(#glow)">59</text>
+      <text x="419.83333333333337" y="146" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="9.5"
+            fill="#4E6A63" letter-spacing="1.2">DIAS ATIVOS</text>
+    </g>
+    <g>
+      <rect x="507" y="68" width="146.33333333333334" height="94" rx="12" fill="#070D10" stroke="#13372F"/>
+      <rect x="507" y="68" width="146.33333333333334" height="3" rx="1.5" fill="url(#neon)" opacity=".9"/>
+      <text x="580.1666666666666" y="122" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="30"
+            font-weight="700" fill="#E9F5F1" filter="url(#glow)">9</text>
+      <text x="580.1666666666666" y="146" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="9.5"
+            fill="#4E6A63" letter-spacing="1.2">REPOS ATIVOS</text>
+    </g>
+    <g>
+      <rect x="667.3333333333334" y="68" width="146.33333333333334" height="94" rx="12" fill="#070D10" stroke="#13372F"/>
+      <rect x="667.3333333333334" y="68" width="146.33333333333334" height="3" rx="1.5" fill="url(#neon)" opacity=".9"/>
+      <text x="740.5" y="122" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="30"
+            font-weight="700" fill="#E9F5F1" filter="url(#glow)">5d</text>
+      <text x="740.5" y="146" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="9.5"
+            fill="#4E6A63" letter-spacing="1.2">SEQUÊNCIA RECORDE</text>
+    </g>
+    <g>
+      <rect x="827.6666666666667" y="68" width="146.33333333333334" height="94" rx="12" fill="#070D10" stroke="#13372F"/>
+      <rect x="827.6666666666667" y="68" width="146.33333333333334" height="3" rx="1.5" fill="url(#neon)" opacity=".9"/>
+      <text x="900.8333333333334" y="122" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="30"
+            font-weight="700" fill="#E9F5F1" filter="url(#glow)">41</text>
+      <text x="900.8333333333334" y="146" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="9.5"
+            fill="#4E6A63" letter-spacing="1.2">SEGUIDORES</text>
+    </g>
+</svg>

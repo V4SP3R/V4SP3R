@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 210" width="1000" height="210" role="img" aria-label="Linguagens mais usadas">
+  <defs>
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00FFA3"/><stop offset="100%" stop-color="#2AC3FF"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse">
+      <path d="M26 0H0V26" fill="none" stroke="#0FE39A" stroke-opacity=".06" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <rect width="1000" height="210" rx="16" fill="#04070A"/>
+  <rect width="1000" height="210" rx="16" fill="url(#grid)"/>
+  <rect x="1" y="1" width="998" height="208" rx="15" fill="none" stroke="#13372F" stroke-width="2"/>
+  <text x="26" y="34" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#4E6A63" letter-spacing="2.4">// DISTRIBUIÇÃO DE LINGUAGENS — POR VOLUME DE CÓDIGO</text>
+  <line x1="26" y1="48" x2="974" y2="48" stroke="#13372F"/>
+  <clipPath id="barclip"><rect x="26" y="74" width="948" height="22" rx="11"/></clipPath>
+  <g clip-path="url(#barclip)"><rect x="26" y="74" width="948" height="22" fill="#070D10"/><rect x="26.00" y="74" width="785.31" height="22" fill="#e34c26">
+       <animate attributeName="opacity" values="0;1" dur=".5s" begin="0.00s" fill="freeze"/>
+     </rect><rect x="811.31" y="74" width="89.59" height="22" fill="#f1e05a">
+       <animate attributeName="opacity" values="0;1" dur=".5s" begin="0.09s" fill="freeze"/>
+     </rect><rect x="900.91" y="74" width="50.46" height="22" fill="#b07219">
+       <animate attributeName="opacity" values="0;1" dur=".5s" begin="0.18s" fill="freeze"/>
+     </rect><rect x="951.36" y="74" width="16.31" height="22" fill="#3572A5">
+       <animate attributeName="opacity" values="0;1" dur=".5s" begin="0.27s" fill="freeze"/>
+     </rect><rect x="967.67" y="74" width="6.26" height="22" fill="#336790">
+       <animate attributeName="opacity" values="0;1" dur=".5s" begin="0.36s" fill="freeze"/>
+     </rect><rect x="973.93" y="74" width="2.00" height="22" fill="#f8bd00">
+       <animate attributeName="opacity" values="0;1" dur=".5s" begin="0.45s" fill="freeze"/>
+     </rect></g>
+  <rect x="26" y="74" width="948" height="22" rx="11" fill="none" stroke="#13372F"/>
+  <g>
+      <rect x="26" y="126" width="11" height="11" rx="3" fill="#e34c26"/>
+      <text x="46" y="136" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#A8BDB7">HTML</text>
+      <text x="229" y="136" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13"
+            fill="#00FFA3" text-anchor="end">82.8%</text>
+    </g><g>
+      <rect x="263" y="126" width="11" height="11" rx="3" fill="#f1e05a"/>
+      <text x="283" y="136" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#A8BDB7">JavaScript</text>
+      <text x="466" y="136" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13"
+            fill="#00FFA3" text-anchor="end">9.5%</text>
+    </g><g>
+      <rect x="500" y="126" width="11" height="11" rx="3" fill="#b07219"/>
+      <text x="520" y="136" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#A8BDB7">Java</text>
+      <text x="703" y="136" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13"
+            fill="#00FFA3" text-anchor="end">5.3%</text>
+    </g><g>
+      <rect x="737" y="126" width="11" height="11" rx="3" fill="#3572A5"/>
+      <text x="757" y="136" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#A8BDB7">Python</text>
+      <text x="940" y="136" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13"
+            fill="#00FFA3" text-anchor="end">1.7%</text>
+    </g><g>
+      <rect x="26" y="160" width="11" height="11" rx="3" fill="#336790"/>
+      <text x="46" y="170" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#A8BDB7">PLpgSQL</text>
+      <text x="229" y="170" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13"
+            fill="#00FFA3" text-anchor="end">0.7%</text>
+    </g><g>
+      <rect x="263" y="160" width="11" height="11" rx="3" fill="#f8bd00"/>
+      <text x="283" y="170" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13" fill="#A8BDB7">Portugol</text>
+      <text x="466" y="170" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13"
+            fill="#00FFA3" text-anchor="end">0.0%</text>
+    </g>
+</svg>
