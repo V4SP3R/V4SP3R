@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300" role="img" aria-label="V4SP3R - Geovane Santos">
+  <defs>
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#00FFA3"/>
+      <stop offset="55%"  stop-color="#22E3D0"/>
+      <stop offset="100%" stop-color="#2AC3FF"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#00FFA3" stop-opacity="0"/>
+      <stop offset="50%"  stop-color="#00FFA3" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#00FFA3" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="vign" cx="50%" cy="42%" r="72%">
+      <stop offset="0%"   stop-color="#0A1F1A" stop-opacity=".85"/>
+      <stop offset="100%" stop-color="#04070A" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse">
+      <path d="M26 0H0V26" fill="none" stroke="#0FE39A" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+    <clipPath id="card"><rect x="1" y="1" width="998" height="298" rx="18"/></clipPath>
+    <clipPath id="typeClip">
+      <rect x="246" y="212" width="0" height="34">
+        <animate attributeName="width" values="0;530;530" keyTimes="0;.5;1" dur="5s" begin="1.4s" repeatCount="indefinite"/>
+      </rect>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#card)">
+    <rect width="1000" height="300" fill="#04070A"/>
+    <rect width="1000" height="300" fill="url(#vign)"/>
+    <rect width="1000" height="300" fill="url(#grid)"/>
+
+    <!-- scanline sweep -->
+    <rect x="0" y="-70" width="1000" height="70" fill="url(#fade)" opacity=".5">
+      <animate attributeName="y" values="-70;300" dur="6s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- terminal chrome -->
+    <rect x="0" y="0" width="1000" height="42" fill="#070D10"/>
+    <line x1="0" y1="42" x2="1000" y2="42" stroke="#0FE39A" stroke-opacity=".25"/>
+    <circle cx="26" cy="21" r="6" fill="#FF5F57"/>
+    <circle cx="48" cy="21" r="6" fill="#FEBC2E"/>
+    <circle cx="70" cy="21" r="6" fill="#28C840"/>
+    <text x="500" y="26" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+          font-size="14" fill="#4E6A63" letter-spacing="1.5">v4sp3r@github — ~/profile — zsh</text>
+
+    <!-- corner brackets -->
+    <g stroke="#00FFA3" stroke-opacity=".55" stroke-width="2" fill="none">
+      <path d="M18 66v-6h6"/><path d="M982 66v-6h-6"/>
+      <path d="M18 268v6h6"/><path d="M982 268v6h-6"/>
+    </g>
+
+    <!-- wordmark V4SP3R -->
+    <g transform="translate(292,92)" fill="none" stroke="url(#neon)" stroke-width="9"
+       stroke-linecap="square" stroke-linejoin="miter" filter="url(#glow)">
+      <g stroke-dasharray="620">
+        <animate attributeName="stroke-dashoffset" from="620" to="0" dur="1.6s" begin="0s" fill="freeze"/>
+        <path d="M6,6 L30,96 L54,6" transform="translate(0,0)"/>
+        <path d="M38,4 L4,68 L54,68 M38,4 L38,96" transform="translate(72,0)"/>
+        <path d="M50,22 C50,9 39,4 29,4 C15,4 7,13 7,26 C7,40 19,46 29,50 C39,54 51,60 51,74 C51,88 41,96 29,96 C17,96 8,90 5,82" transform="translate(144,0)"/>
+        <path d="M8,96 L8,4 L32,4 A26,26 0 0 1 32,56 L8,56" transform="translate(216,0)"/>
+        <path d="M7,16 C13,7 21,4 30,4 C42,4 50,12 50,24 C50,36 42,44 29,44 C43,44 53,52 53,66 C53,82 43,96 29,96 C18,96 9,91 5,83" transform="translate(288,0)"/>
+        <path d="M8,96 L8,4 L32,4 A26,26 0 0 1 32,56 L8,56 M31,56 L54,96" transform="translate(360,0)"/>
+      </g>
+    </g>
+
+    <!-- ghost duplicate for chromatic drift -->
+    <g transform="translate(292,92)" fill="none" stroke="#FF2E88" stroke-width="9" opacity=".18"
+       stroke-linecap="square" style="mix-blend-mode:screen">
+      <animateTransform attributeName="transform" type="translate"
+        values="292,92; 294.5,92; 292,92; 289.5,92; 292,92" dur="3.4s" repeatCount="indefinite"/>
+      <path d="M6,6 L30,96 L54,6"/>
+      <path d="M38,4 L4,68 L54,68 M38,4 L38,96" transform="translate(72,0)"/>
+      <path d="M50,22 C50,9 39,4 29,4 C15,4 7,13 7,26 C7,40 19,46 29,50 C39,54 51,60 51,74 C51,88 41,96 29,96 C17,96 8,90 5,82" transform="translate(144,0)"/>
+      <path d="M8,96 L8,4 L32,4 A26,26 0 0 1 32,56 L8,56" transform="translate(216,0)"/>
+      <path d="M7,16 C13,7 21,4 30,4 C42,4 50,12 50,24 C50,36 42,44 29,44 C43,44 53,52 53,66 C53,82 43,96 29,96 C18,96 9,91 5,83" transform="translate(288,0)"/>
+      <path d="M8,96 L8,4 L32,4 A26,26 0 0 1 32,56 L8,56 M31,56 L54,96" transform="translate(360,0)"/>
+    </g>
+
+    <!-- typed subtitle -->
+    <g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="17">
+      <text x="228" y="236" fill="#00FFA3" opacity=".9">&#8250;</text>
+      <g clip-path="url(#typeClip)">
+        <text x="252" y="236" fill="#B7C9C3" letter-spacing="1.1">full-stack dev · dashboards · automação · IA</text>
+      </g>
+      <rect x="252" y="220" width="9" height="20" fill="#00FFA3" filter="url(#soft)">
+        <animate attributeName="opacity" values="1;1;0;0;1" dur="1s" repeatCount="indefinite"/>
+        <animate attributeName="x" values="252;776;776" keyTimes="0;.5;1" dur="5s" begin="1.4s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+
+    <!-- side meta -->
+    <g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#3F5C55" letter-spacing="2">
+      <text x="24" y="290">BASE: BRASIL</text>
+      <text x="976" y="290" text-anchor="end">STATUS: ONLINE</text>
+      <circle cx="836" cy="286" r="4" fill="#00FFA3">
+        <animate attributeName="opacity" values=".25;1;.25" dur="2s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <rect x="1" y="1" width="998" height="298" rx="18" fill="none" stroke="#0FE39A" stroke-opacity=".28" stroke-width="2"/>
+  </g>
+</svg>
