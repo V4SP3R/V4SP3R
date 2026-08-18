@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 12" width="1000" height="12" role="img" aria-label="divisor">
+  <defs>
+    <linearGradient id="d" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#00FFA3" stop-opacity="0"/>
+      <stop offset="25%"  stop-color="#00FFA3" stop-opacity=".85"/>
+      <stop offset="50%"  stop-color="#2AC3FF" stop-opacity="1"/>
+      <stop offset="75%"  stop-color="#00FFA3" stop-opacity=".85"/>
+      <stop offset="100%" stop-color="#00FFA3" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="g" x="-20%" y="-400%" width="140%" height="900%">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect x="0" y="5" width="1000" height="2" fill="url(#d)" filter="url(#g)"/>
+  <circle cy="6" r="3.5" fill="#00FFA3" filter="url(#g)">
+    <animate attributeName="cx" values="120;880;120" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values=".2;1;.2" dur="7s" repeatCount="indefinite"/>
+  </circle>
+</svg>
