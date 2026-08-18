@@ -1,0 +1,57 @@
+name: Atualizar perfil
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"   # a cada 6 horas
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  cards:
+    name: Gerar cards de métricas
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Gerar SVGs (KPIs, linguagens, heatmap)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_USER: ${{ github.repository_owner }}
+        run: node scripts/build-cards.mjs
+
+      - name: Commitar se houve mudança
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/kpi.svg assets/langs.svg assets/contrib.svg
+          git diff --staged --quiet || git commit -m "chore: atualiza cards de métricas [skip ci]"
+          git push
+
+  snake:
+    name: Gerar animação da snake
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Gerar SVGs a partir do gráfico de contribuições
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/snake.svg?color_snake=%2300FFA3&color_dots=%230B1417,%2312734F,%2316B37C,%2300E08D,%2300FFA3
+            dist/snake-dark.svg?color_snake=%232AC3FF&color_dots=%230B1417,%2312734F,%2316B37C,%2300E08D,%2300FFA3
+
+      - name: Publicar na branch output
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
