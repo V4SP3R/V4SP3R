@@ -79,7 +79,27 @@ async function fetchData() {
   if (!res.ok) throw new Error(`GitHub API ${res.status}: ${await res.text()}`);
   const json = await res.json();
   if (json.errors) throw new Error(JSON.stringify(json.errors));
-  return json.data.user;
+
+  const user = json.data.user;
+  const year = new Date().getUTCFullYear();
+  try {
+    const profileRes = await fetch(
+      `https://github.com/users/${encodeURIComponent(USER)}/contributions?from=${year}-01-01&to=${year}-12-31`,
+      { headers: { 'User-Agent': 'v4sp3r-profile-cards' } },
+    );
+    if (profileRes.ok) {
+      const html = await profileRes.text();
+      const match = html.match(/([\d,.]+)\s+contributions in\s+\d{4}/i);
+      if (match) {
+        user.contributionsCollection.contributionCalendar.totalContributions =
+          Number(match[1].replace(/[^\d]/g, ''));
+      }
+    }
+  } catch (error) {
+    console.warn(`Não foi possível ler o total público do perfil: ${error.message}`);
+  }
+
+  return user;
 }
 
 function mockData() {
