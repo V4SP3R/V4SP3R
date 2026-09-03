@@ -67,6 +67,7 @@ v4sp3r@github:~$ _
 
 ## `03` — métricas
 
+<!-- METRICS:START -->
 <div align="center">
 
 <img src="./assets/kpi.svg" width="100%" alt="Painel de métricas — últimos 12 meses" />
@@ -81,16 +82,19 @@ v4sp3r@github:~$ _
 > **25+ repositórios**, com **100% do volume vindo de commits diretos de código**. Só em
 > agosto de 2026 foram **27 commits em 5 repositórios** e **4 repositórios novos** criados.
 > É um histórico de entrega contínua — não de picos isolados.
+<!-- METRICS:END -->
 
 <div align="center"><img src="./assets/divider.svg" width="100%" alt="" /></div>
 
 ## `04` — linguagens
 
+<!-- LANGS:START -->
 <div align="center">
 
 <img src="./assets/langs.svg" width="100%" alt="Distribuição de linguagens" />
 
 </div>
+<!-- LANGS:END -->
 
 <div align="center"><img src="./assets/divider.svg" width="100%" alt="" /></div>
 
