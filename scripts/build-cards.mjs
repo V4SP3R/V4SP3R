@@ -14,6 +14,10 @@ const USER  = process.env.GH_USER || 'V4SP3R';
 const TOKEN = process.env.GITHUB_TOKEN;
 const OUT   = 'assets';
 
+// O token do Actions não enxerga contribuições privadas/de organizações.
+// Sincronize com o total exibido no perfil autenticado quando ele mudar.
+const PROFILE_TOTAL_OVERRIDE = 9644;
+
 /* ─────────────────────────── paleta ─────────────────────────── */
 const C = {
   bg:     '#04070A',
@@ -81,22 +85,8 @@ async function fetchData() {
   if (json.errors) throw new Error(JSON.stringify(json.errors));
 
   const user = json.data.user;
-  const year = new Date().getUTCFullYear();
-  try {
-    const profileRes = await fetch(
-      `https://github.com/users/${encodeURIComponent(USER)}/contributions?from=${year}-01-01&to=${year}-12-31`,
-      { headers: { 'User-Agent': 'v4sp3r-profile-cards' } },
-    );
-    if (profileRes.ok) {
-      const html = await profileRes.text();
-      const match = html.match(/([\d,.]+)\s+contributions in\s+\d{4}/i);
-      if (match) {
-        user.contributionsCollection.contributionCalendar.totalContributions =
-          Number(match[1].replace(/[^\d]/g, ''));
-      }
-    }
-  } catch (error) {
-    console.warn(`Não foi possível ler o total público do perfil: ${error.message}`);
+  if (PROFILE_TOTAL_OVERRIDE > 0) {
+    user.contributionsCollection.contributionCalendar.totalContributions = PROFILE_TOTAL_OVERRIDE;
   }
 
   return user;
