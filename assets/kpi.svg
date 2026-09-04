@@ -22,7 +22,7 @@
       <rect x="26" y="68" width="146.33333333333334" height="94" rx="12" fill="#070D10" stroke="#13372F"/>
       <rect x="26" y="68" width="146.33333333333334" height="3" rx="1.5" fill="url(#neon)" opacity=".9"/>
       <text x="99.16666666666667" y="122" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="30"
-            font-weight="700" fill="#E9F5F1" filter="url(#glow)">9.728</text>
+            font-weight="700" fill="#E9F5F1" filter="url(#glow)">9.729</text>
       <text x="99.16666666666667" y="146" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="9.5"
             fill="#4E6A63" letter-spacing="1.2">CONTRIBUIÇÕES / ANO</text>
     </g>
@@ -30,7 +30,7 @@
       <rect x="186.33333333333334" y="68" width="146.33333333333334" height="94" rx="12" fill="#070D10" stroke="#13372F"/>
       <rect x="186.33333333333334" y="68" width="146.33333333333334" height="3" rx="1.5" fill="url(#neon)" opacity=".9"/>
       <text x="259.5" y="122" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="30"
-            font-weight="700" fill="#E9F5F1" filter="url(#glow)">241</text>
+            font-weight="700" fill="#E9F5F1" filter="url(#glow)">242</text>
       <text x="259.5" y="146" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="9.5"
             fill="#4E6A63" letter-spacing="1.2">COMMITS</text>
     </g>
