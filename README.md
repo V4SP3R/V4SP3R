@@ -78,10 +78,13 @@ v4sp3r@github:~$ _
 
 </div>
 
-> **Leitura do painel** — são **322 contribuições nos últimos 12 meses**, espalhadas por
-> **25+ repositórios**, com **100% do volume vindo de commits diretos de código**. Só em
-> agosto de 2026 foram **27 commits em 5 repositórios** e **4 repositórios novos** criados.
-> É um histórico de entrega contínua — não de picos isolados.
+> **Leitura do painel** — são **9.728 contribuições nos últimos 12 meses**, distribuídas em
+> **112 dias com código**, com sequência recorde de **17 dias** e pico de **1.636 contribuições
+> em um único dia**. O mês mais forte foi **julho de 2026**, com **7.380 contribuições**; nos
+> últimos 30 dias foram **46 contribuições em 7 dias ativos**. Desse volume, **241 commits
+> diretos** em **10 repositórios** são os que a API pública detalha.
+>
+> <sub>números lidos do calendário público de contribuições e regenerados a cada 6 horas — última atualização: 03/09/2026</sub>
 <!-- METRICS:END -->
 
 <div align="center"><img src="./assets/divider.svg" width="100%" alt="" /></div>
