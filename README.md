@@ -1,8 +1,10 @@
 <!--
   Perfil de V4SP3R (Geovane Santos)
-  Os cards em ./assets/{kpi,langs,contrib}.svg sao gerados automaticamente
-  por .github/workflows/profile.yml -> scripts/build-cards.mjs.
-  Nao edite esses tres SVGs na mao: eles sao sobrescritos a cada 6 horas.
+  Os cards em ./assets/{kpi,langs,contrib}.svg E o bloco entre os marcadores
+  METRICS:START / METRICS:END sao gerados automaticamente por
+  .github/workflows/profile.yml -> scripts/build-cards.mjs.
+  Nao edite esses tres SVGs nem aquele paragrafo na mao: sao sobrescritos
+  a cada 6 horas com os numeros lidos do calendario publico de contribuicoes.
 -->
 
 <div align="center">
@@ -78,10 +80,10 @@ v4sp3r@github:~$ _
 
 </div>
 
-> **Leitura do painel** — são **9.728 contribuições nos últimos 12 meses**, distribuídas em
+> **Leitura do painel** — são **9.726 contribuições nos últimos 12 meses**, distribuídas em
 > **112 dias com código**, com sequência recorde de **17 dias** e pico de **1.636 contribuições
 > em um único dia**. O mês mais forte foi **julho de 2026**, com **7.380 contribuições**; nos
-> últimos 30 dias foram **46 contribuições em 7 dias ativos**. Desse volume, **241 commits
+> últimos 30 dias foram **44 contribuições em 7 dias ativos**. Desse volume, **239 commits
 > diretos** em **10 repositórios** são os que a API pública detalha.
 >
 > <sub>números lidos do calendário público de contribuições e regenerados a cada 6 horas — última atualização: 03/09/2026</sub>
