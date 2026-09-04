@@ -8,15 +8,16 @@
  *   node scripts/build-cards.mjs            # dados reais
  *   MOCK=1 node scripts/build-cards.mjs     # dados fictícios (preview local)
  */
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, readFileSync, mkdirSync } from 'node:fs';
 
-const USER  = process.env.GH_USER || 'V4SP3R';
-const TOKEN = process.env.GITHUB_TOKEN;
-const OUT   = 'assets';
+const USER   = process.env.GH_USER || 'V4SP3R';
+const TOKEN  = process.env.GITHUB_TOKEN;
+const OUT    = 'assets';
+const README = process.env.README_FILE || 'README.md';
 
-// O token do Actions não enxerga contribuições privadas/de organizações.
-// Sincronize com o total exibido no perfil autenticado quando ele mudar.
-const PROFILE_TOTAL_OVERRIDE = 9644;
+// O token do Actions nao enxerga contribuicoes privadas/de organizacoes, entao o
+// calendario publico do perfil (mesmo numero que aparece em github.com/<user>)
+// e lido diretamente e substitui o calendario vindo da GraphQL. Sem numero fixo.
 
 /* ─────────────────────────── paleta ─────────────────────────── */
 const C = {
@@ -84,12 +85,44 @@ async function fetchData() {
   const json = await res.json();
   if (json.errors) throw new Error(JSON.stringify(json.errors));
 
-  const user = json.data.user;
-  if (PROFILE_TOTAL_OVERRIDE > 0) {
-    user.contributionsCollection.contributionCalendar.totalContributions = PROFILE_TOTAL_OVERRIDE;
+  return json.data.user;
+}
+
+/* Calendario publico do perfil — inclui contribuicoes privadas/de organizacoes
+   quando o usuario optou por exibi-las, que e o numero mostrado no perfil. */
+async function fetchPublicCalendar(login) {
+  const res = await fetch(`https://github.com/users/${login}/contributions`, {
+    headers: { 'User-Agent': 'v4sp3r-profile-cards', Accept: 'text/html' },
+  });
+  if (!res.ok) throw new Error(`calendario publico ${res.status}`);
+  const html = await res.text();
+
+  const counts = new Map();
+  for (const m of html.matchAll(/<tool-tip[^>]*\sfor="([^"]+)"[^>]*>\s*(No|[\d.,]+)\s+contribution/g)) {
+    counts.set(m[1], m[2] === 'No' ? 0 : parseInt(m[2].replace(/[.,]/g, ''), 10));
   }
 
-  return user;
+  const today = new Date().toISOString().slice(0, 10);
+  const buckets = new Map();
+  for (const m of html.matchAll(/<td\b[^>]*>/g)) {
+    const tag = m[0];
+    if (!tag.includes('ContributionCalendar-day')) continue;
+    const date = (tag.match(/data-date="([^"]+)"/) || [])[1];
+    const id = (tag.match(/\sid="([^"]+)"/) || [])[1];
+    if (!date || date > today) continue;
+    const ix = id && id.match(/-(\d+)-(\d+)$/);
+    const week = ix ? Number(ix[2]) : 0;
+    const weekday = ix ? Number(ix[1]) : new Date(`${date}T12:00:00Z`).getUTCDay();
+    if (!buckets.has(week)) buckets.set(week, []);
+    buckets.get(week).push({ date, contributionCount: counts.get(id) ?? 0, weekday });
+  }
+
+  const weeks = [...buckets.entries()]
+    .sort((a, b) => a[0] - b[0])
+    .map(([, days]) => ({ contributionDays: days.sort((a, b) => a.weekday - b.weekday) }));
+  const all = weeks.flatMap((w) => w.contributionDays);
+  if (all.length < 300) throw new Error(`calendario publico incompleto (${all.length} dias)`);
+  return { weeks, totalContributions: all.reduce((a, d) => a + d.contributionCount, 0) };
 }
 
 function mockData() {
@@ -166,6 +199,97 @@ function topLanguages(repos, limit = 8) {
   const rest = all.slice(limit).reduce((a, b) => a + b.size, 0);
   if (rest > 0) top.push({ name: 'Outras', color: '#38505A', size: rest });
   return top.map((l) => ({ ...l, pct: (l.size / total) * 100 }));
+}
+
+function periodStats(weeks) {
+  const days = weeks.flatMap((w) => w.contributionDays)
+    .filter((d) => new Date(`${d.date}T12:00:00Z`) <= new Date())
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  const byMonth = new Map();
+  for (const d of days) {
+    const k = d.date.slice(0, 7);
+    byMonth.set(k, (byMonth.get(k) ?? 0) + d.contributionCount);
+  }
+  const bestMonth = [...byMonth.entries()].sort((a, b) => b[1] - a[1])[0] ?? ['', 0];
+
+  const last30 = days.slice(-30);
+  const peak = days.reduce((a, b) => (b.contributionCount > a.contributionCount ? b : a), days[0]);
+
+  return {
+    total: days.reduce((a, d) => a + d.contributionCount, 0),
+    byMonth,
+    bestMonth: { key: bestMonth[0], total: bestMonth[1] },
+    last30: {
+      total: last30.reduce((a, d) => a + d.contributionCount, 0),
+      active: last30.filter((d) => d.contributionCount > 0).length,
+    },
+    peak: { date: peak.date, count: peak.contributionCount },
+  };
+}
+
+const MESES_EXT = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+  'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+const mesExtenso = (ym) => {
+  const [y, m] = ym.split('-');
+  return `${MESES_EXT[Number(m) - 1]} de ${y}`;
+};
+const plural = (n, sing, plur) => (n === 1 ? sing : plur);
+
+/* Paragrafo "Leitura do painel": escrito a partir dos mesmos dados dos cards,
+   entre os marcadores METRICS no README — nunca digitado a mao. */
+const wrapQuote = (text, width = 96) => {
+  const out = [];
+  let line = '>';
+  for (const w of text.split(/\s+/)) {
+    if (line.length + w.length + 1 > width && line !== '>') { out.push(line); line = '>'; }
+    line += ` ${w}`;
+  }
+  out.push(line);
+  return out.join('\n');
+};
+
+function metricsBlock(u, s, p) {
+  const cc = u.contributionsCollection;
+  const repos = cc.totalRepositoriesWithContributedCommits;
+  const leitura = [
+    `**Leitura do painel** — são **${nf(p.total)} contribuições nos últimos 12 meses**,`,
+    `distribuídas em **${nf(s.active)} ${plural(s.active, 'dia', 'dias')} com código**, com sequência`,
+    `recorde de **${nf(s.best)} ${plural(s.best, 'dia', 'dias')}** e pico de **${nf(p.peak.count)} contribuições em um único dia**.`,
+    `O mês mais forte foi **${mesExtenso(p.bestMonth.key)}**, com **${nf(p.bestMonth.total)} contribuições**;`,
+    `nos últimos 30 dias foram **${nf(p.last30.total)} contribuições em ${nf(p.last30.active)} ${plural(p.last30.active, 'dia ativo', 'dias ativos')}**.`,
+    `Desse volume, **${nf(cc.totalCommitContributions)} commits diretos** em`,
+    `**${nf(repos)} ${plural(repos, 'repositório', 'repositórios')}** são os que a API pública detalha.`,
+  ].join(' ');
+  const carimbo = new Date().toLocaleDateString('pt-BR',
+    { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'America/Sao_Paulo' });
+
+  return `<!-- METRICS:START -->
+<div align="center">
+
+<img src="./assets/kpi.svg" width="100%" alt="Painel de métricas — últimos 12 meses" />
+
+<br/>
+
+<img src="./assets/contrib.svg" width="100%" alt="Gráfico de contribuições das últimas 53 semanas" />
+
+</div>
+
+${wrapQuote(leitura)}
+>
+> <sub>números lidos do calendário público de contribuições e regenerados a cada 6 horas — última atualização: ${carimbo}</sub>
+<!-- METRICS:END -->`;
+}
+
+function updateReadme(block) {
+  let md;
+  try { md = readFileSync(README, 'utf8'); } catch { return false; }
+  const re = /<!-- METRICS:START -->[\s\S]*?<!-- METRICS:END -->/;
+  if (!re.test(md)) { console.warn('! marcadores METRICS nao encontrados em', README); return false; }
+  const next = md.replace(re, block);
+  if (next === md) return false;
+  writeFileSync(README, next);
+  return true;
 }
 
 /* ───────────────────────── blocos SVG ───────────────────────── */
@@ -313,13 +437,29 @@ function cardHeatmap(u, s) {
 /* ───────────────────────────── main ───────────────────────────── */
 const seedFile = process.env.SEED_FILE;
 const user = seedFile
-  ? JSON.parse((await import('node:fs')).readFileSync(seedFile, 'utf8'))
+  ? JSON.parse(readFileSync(seedFile, 'utf8'))
   : process.env.MOCK ? mockData() : await fetchData();
-const s = streaks(user.contributionsCollection.contributionCalendar.weeks);
+
+// calendario publico manda no total/heatmap; GraphQL fica como plano B
+if (!process.env.MOCK && !process.env.SKIP_PUBLIC_CALENDAR) {
+  try {
+    const pub = await fetchPublicCalendar(user.login || USER);
+    user.contributionsCollection.contributionCalendar = pub;
+  } catch (err) {
+    console.warn(`! calendario publico indisponivel (${err.message}) — usando dados da GraphQL`);
+  }
+}
+
+const cal = user.contributionsCollection.contributionCalendar;
+const s = streaks(cal.weeks);
+const p = periodStats(cal.weeks);
+cal.totalContributions = p.total;
 const langs = topLanguages(user.repositories.nodes);
 
 mkdirSync(OUT, { recursive: true });
 writeFileSync(`${OUT}/kpi.svg`, cardKPI(user, s));
 writeFileSync(`${OUT}/langs.svg`, cardLangs(langs, process.env.LANGS_TITLE));
 writeFileSync(`${OUT}/contrib.svg`, cardHeatmap(user, s));
-console.log(`✔ cards gerados em ${OUT}/ — ${user.contributionsCollection.contributionCalendar.totalContributions} contribuições, ${langs.length} linguagens`);
+const touched = updateReadme(metricsBlock(user, s, p));
+console.log(`✔ cards gerados em ${OUT}/ — ${nf(p.total)} contribuições, ${s.active} dias ativos, ${langs.length} linguagens`);
+console.log(touched ? `✔ ${README} atualizado (bloco METRICS)` : `· ${README} sem mudanças`);
