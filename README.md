@@ -86,7 +86,7 @@ v4sp3r@github:~$ _
 > últimos 30 dias foram **49 contribuições em 8 dias ativos**. Desse volume, **243 commits
 > diretos** em **10 repositórios** são os que a API pública detalha.
 >
-> <sub>números lidos do calendário público de contribuições e regenerados a cada 6 horas — última atualização: 08/09/2026</sub>
+> <sub>números lidos do calendário público de contribuições e regenerados a cada 6 horas — última atualização: 09/09/2026</sub>
 <!-- METRICS:END -->
 
 <div align="center"><img src="./assets/divider.svg" width="100%" alt="" /></div>
