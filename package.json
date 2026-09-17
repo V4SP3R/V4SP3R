@@ -1,0 +1,13 @@
+{
+  "name": "v4sp3r-profile-readme",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-profile.mjs",
+    "test": "node scripts/build-profile.mjs --offline && node scripts/verify-profile.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
