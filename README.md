@@ -7,8 +7,7 @@
 
 <img src="./assets/profile.svg" alt="Vasper — All vibes, even more code. Stack e métricas do perfil V4SP3R." width="100%" />
 
-<br />
-
-<img src="https://visitor-badge.laobi.icu/badge?page_id=V4SP3R.V4SP3R" alt="Contador de visitas" />
+<!-- Mantém o contador verdadeiro ativo; o valor visível é incorporado ao card Visitors pelo workflow. -->
+<img src="https://visitor-badge.laobi.icu/badge?page_id=V4SP3R.V4SP3R" alt="" width="1" height="1" />
 
 </div>

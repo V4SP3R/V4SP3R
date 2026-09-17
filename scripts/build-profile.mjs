@@ -8,6 +8,7 @@ const USER = process.env.GH_USER || "V4SP3R";
 const TOKEN = process.env.GITHUB_TOKEN;
 const OFFLINE = process.env.PROFILE_OFFLINE === "1" || process.argv.includes("--offline");
 const OUT = resolve(ROOT, "assets", "profile.svg");
+const VISITOR_PAGE_ID = process.env.VISITOR_PAGE_ID || USER + "." + USER;
 
 const C = {
   bg: "#071018",
@@ -76,12 +77,13 @@ function staticWeeks() {
 }
 
 const SNAPSHOT = {
-  contributions: 9752,
-  commits: 252,
-  activeDays: 117,
+  contributions: 9753,
+  commits: 253,
+  activeDays: 118,
   repositories: 12,
   streak: 17,
   followers: 48,
+  visitors: 9,
   weeks: staticWeeks(),
 };
 
@@ -118,6 +120,23 @@ async function fetchGraphql() {
   const payload = await response.json();
   if (payload.errors) throw new Error(JSON.stringify(payload.errors));
   return payload.data.user;
+}
+
+async function fetchVisitorCount() {
+  const url = "https://visitor-badge.laobi.icu/badge?page_id=" +
+    encodeURIComponent(VISITOR_PAGE_ID) + "&query_only=true";
+  const response = await fetch(url, {
+    headers: { Accept: "image/svg+xml", "User-Agent": "v4sp3r-profile-readme" },
+  });
+  if (!response.ok) throw new Error("contador de visitas " + response.status);
+  const svg = await response.text();
+  const values = [...svg.matchAll(/<text\b[^>]*>([\d.,]+)<\/text>/g)];
+  const raw = values.at(-1)?.[1]?.replace(/[^\d]/g, "");
+  const count = Number(raw);
+  if (!raw || !Number.isSafeInteger(count)) {
+    throw new Error("resposta inválida do contador de visitas");
+  }
+  return count;
 }
 
 async function fetchPublicCalendar(login) {
@@ -207,12 +226,17 @@ function activity(weeks) {
 
 async function loadModel() {
   if (!TOKEN || OFFLINE) {
-    console.log("· usando snapshot local de 16/09/2026");
+    console.log("· usando snapshot local de 17/09/2026");
     return SNAPSHOT;
   }
 
+  const visitorsPromise = fetchVisitorCount().catch((error) => {
+    console.warn("! " + error.message + "; mantendo visitantes do snapshot");
+    return SNAPSHOT.visitors;
+  });
+
   try {
-    const user = await fetchGraphql();
+    const [user, visitors] = await Promise.all([fetchGraphql(), visitorsPromise]);
     let weeks = graphWeeks(user.contributionsCollection.contributionCalendar.weeks);
     try {
       weeks = await fetchPublicCalendar(USER);
@@ -228,12 +252,13 @@ async function loadModel() {
       repositories: user.contributionsCollection.totalRepositoriesWithContributedCommits,
       streak: stats.streak,
       followers: user.followers.totalCount,
+      visitors,
       weeks,
     };
   } catch (error) {
     console.warn("! métricas online indisponíveis: " + error.message);
     console.warn("· mantendo snapshot local");
-    return SNAPSHOT;
+    return { ...SNAPSHOT, visitors: await visitorsPromise };
   }
 }
 
@@ -324,6 +349,7 @@ function metricIcon(index, x, y) {
     '<path d="M2 7h7l2 3h9v10H2zM2 7V4h7l2 3" ' + common + '/>',
     '<path d="M13 1L4 13h7l-1 8 9-13h-7z" ' + common + '/>',
     '<path d="M11 20S2 14.8 2 8.5A4.5 4.5 0 0 1 10 5.7L11 7l1-1.3a4.5 4.5 0 0 1 8 2.8C20 14.8 11 20 11 20z" ' + common + '/>',
+    '<path d="M1 11s4-7 10-7 10 7 10 7-4 7-10 7S1 11 1 11zM11 8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" ' + common + '/>',
   ];
   return '<g transform="translate(' + x + " " + y + ')">' + icons[index] + "</g>";
 }
@@ -336,10 +362,11 @@ function metricCards(model) {
     { value: nf(model.repositories), label: "Repositories", sub: "active projects" },
     { value: nf(model.streak) + "d", label: "Record streak", sub: "personal best" },
     { value: nf(model.followers), label: "Followers", sub: "GitHub profile" },
+    { value: nf(model.visitors), label: "Visitors", sub: "live profile views" },
   ];
   const y = 705;
-  const width = 159.33;
-  const gap = 12;
+  const gap = 10;
+  const width = (1016 - gap * (metrics.length - 1)) / metrics.length;
   return metrics.map((metric, index) => {
     const x = 42 + index * (width + gap);
     return [
@@ -454,4 +481,4 @@ const model = await loadModel();
 const svg = buildSvg(model);
 writeFileSync(OUT, svg);
 console.log("✔ assets/profile.svg gerado");
-console.log("  " + nf(model.contributions) + " contribuições · " + nf(model.activeDays) + " dias ativos · " + nf(model.followers) + " seguidores");
+console.log("  " + nf(model.contributions) + " contribuições · " + nf(model.activeDays) + " dias ativos · " + nf(model.followers) + " seguidores · " + nf(model.visitors) + " visitantes");

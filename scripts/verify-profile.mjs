@@ -37,14 +37,16 @@ expect(svg.includes("Architecture systems - Full Stack, and little bit more...")
 expect(svg.includes("01 — stack"), "seção stack ausente");
 expect(svg.includes("02 — metrics"), "seção metrics ausente");
 expect((svg.match(/data-stack-card=/g) || []).length === 14, "o painel deve ter 14 stacks");
-expect((svg.match(/data-metric-card=/g) || []).length === 6, "o painel deve ter 6 métricas");
+expect((svg.match(/data-metric-card=/g) || []).length === 7, "o painel deve ter 7 métricas");
+expect(svg.includes('data-metric-card="Visitors"'), "card de visitantes ausente");
 expect(!/<(?:script|foreignObject|animate|animateTransform)\b/i.test(svg), "SVG contém recurso proibido ou animação");
 expect(!/(?:href|xlink:href)="https?:/i.test(svg), "SVG contém referência remota");
 expect((svg.match(/data:image\//g) || []).length >= 16, "assets não foram incorporados ao SVG");
 expect(statSync(svgPath).size < 10 * 1024 * 1024, "profile.svg excede 10 MB");
 expect(readme.includes("./assets/profile.svg"), "README não referencia o painel");
 expect(readme.includes("https://visitor-badge.laobi.icu/badge?page_id=V4SP3R.V4SP3R"), "contador de visitas incorreto");
+expect(/width="1" height="1"/.test(readme), "pixel do contador real deve permanecer no README");
 expect(!/page_id=trilokia/i.test(readme), "contador ainda aponta para Trilokia");
 
 console.log("✔ README e profile.svg validados");
-console.log("  stacks: 14 · métricas: 6 · sem animações · assets incorporados");
+console.log("  stacks: 14 · métricas: 7 · contador real · sem animações · assets incorporados");
