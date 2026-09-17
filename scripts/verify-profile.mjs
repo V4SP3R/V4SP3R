@@ -45,7 +45,7 @@ expect((svg.match(/data:image\//g) || []).length >= 16, "assets não foram incor
 expect(statSync(svgPath).size < 10 * 1024 * 1024, "profile.svg excede 10 MB");
 expect(readme.includes("./assets/profile.svg"), "README não referencia o painel");
 expect(readme.includes("https://visitor-badge.laobi.icu/badge?page_id=V4SP3R.V4SP3R"), "contador de visitas incorreto");
-expect(/width="1" height="1"/.test(readme), "pixel do contador real deve permanecer no README");
+expect(/width="0" height="0"/.test(readme), "contador real oculto deve permanecer sem ocupar espaço no README");
 expect(!/page_id=trilokia/i.test(readme), "contador ainda aponta para Trilokia");
 
 console.log("✔ README e profile.svg validados");

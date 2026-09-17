@@ -5,9 +5,6 @@
 
 <div align="center">
 
-<img src="./assets/profile.svg" alt="Vasper — All vibes, even more code. Stack e métricas do perfil V4SP3R." width="100%" />
-
-<!-- Mantém o contador verdadeiro ativo; o valor visível é incorporado ao card Visitors pelo workflow. -->
-<img src="https://visitor-badge.laobi.icu/badge?page_id=V4SP3R.V4SP3R" alt="" width="1" height="1" />
+<img src="./assets/profile.svg" alt="Vasper — All vibes, even more code. Stack e métricas do perfil V4SP3R." width="100%" /><img src="https://visitor-badge.laobi.icu/badge?page_id=V4SP3R.V4SP3R" alt="" width="0" height="0" />
 
 </div>
